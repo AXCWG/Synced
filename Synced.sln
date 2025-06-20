@@ -5,6 +5,8 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Synced.Server", "Synced.Server\Synced.Server.csproj", "{A429BF5D-FED3-4F13-9B65-06E025071A0F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Synced.Client.Windows", "Synced.Client\Synced.Client.Windows.csproj", "{5A4AE73F-1A99-4964-81E7-CD07BA33A60C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{A429BF5D-FED3-4F13-9B65-06E025071A0F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A429BF5D-FED3-4F13-9B65-06E025071A0F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A429BF5D-FED3-4F13-9B65-06E025071A0F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5A4AE73F-1A99-4964-81E7-CD07BA33A60C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A4AE73F-1A99-4964-81E7-CD07BA33A60C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5A4AE73F-1A99-4964-81E7-CD07BA33A60C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5A4AE73F-1A99-4964-81E7-CD07BA33A60C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
