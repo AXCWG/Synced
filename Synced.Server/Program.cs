@@ -1,8 +1,10 @@
 using Microsoft.Data.Sqlite;
 using Microsoft.Extensions.FileProviders;
 using Synced.Server;
+using Synced.Server.ApiEndpoints;
 using System.Text.Json.Serialization;
 
+var cfg = new Configs();
 var connection = new SqliteConnection($"Data Source={Configs.DataDirectory}/App.db");
 connection.Open();
 connection.DbInitialize();
@@ -38,12 +40,18 @@ app.MapGet("/", () =>
 {
     if (init)
     {
-        return Results.Text("Please setup on a client. ");
+        return Results.Text("Please interact over with a client. ");
     }
     return Results.NotFound();
 });
 
-var todosApi = app.MapGroup("/todos");
+app.UseUserApi(cfg);
+app.UseFileApis(cfg); 
+
+
+
+
+
 //todosApi.MapGet("/", () => sampleTodos);
 //todosApi.MapGet("/{id}", (int id) =>
 //    sampleTodos.FirstOrDefault(a => a.Id == id) is { } todo

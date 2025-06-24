@@ -1,6 +1,6 @@
 ﻿namespace Synced.Server
 {
-    public static class Configs
+    public class Configs
     {
         public static string DataDirectory
         {
@@ -10,12 +10,17 @@
                 {
                     Directory.CreateDirectory(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "/AXCWG");
                 }
-                if(!Directory.Exists(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "/AXCWG" + "/SyncedServer"))
+                if (!Directory.Exists(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "/AXCWG" + "/SyncedServer"))
                 {
-                    Directory.CreateDirectory(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "/AXCWG" + "/SyncedServer"); 
+                    Directory.CreateDirectory(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "/AXCWG" + "/SyncedServer");
                 }
                 return Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "/AXCWG" + "/SyncedServer";
             }
+
+        }
+        public bool? EnableRegister
+        {
+            get; set;
         }
     }
 }
