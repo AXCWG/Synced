@@ -1,5 +1,13 @@
-﻿namespace Synced.Server
+﻿using System.Text.Json;
+using System.Text.Json.Serialization;
+
+namespace Synced.Server
 {
+    [JsonSourceGenerationOptions(JsonSerializerDefaults.Web)]
+    [JsonSerializable(typeof(Configs))]
+    public partial class AppSerializerContext : JsonSerializerContext
+    {
+    }
     public class Configs
     {
         public static string DataDirectory
@@ -22,5 +30,12 @@
         {
             get; set;
         }
+
+        public static bool isInit
+        {
+            get;
+            set;
+        }
+        
     }
 }
