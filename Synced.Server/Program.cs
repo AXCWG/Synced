@@ -6,8 +6,18 @@ using Synced.Server.ApiEndpoints;
 using System.Text.Json.Serialization;
 
 
+var cfg = new Func<Configs>(() =>
+{
+    if (File.Exists($"{Configs.DataDirectory}/Config.json"))
+    {
+        return JsonSerializer.Deserialize(File.ReadAllText($"{Configs.DataDirectory}/Config.json"), AppSerializerContext.Default.Configs) ?? new Configs();
+    }
+    else
+    {
+        return new Configs();
+    }
+})();
 
-var cfg = new Configs();
 Console.CancelKeyPress += (_, _) =>
 {
     File.WriteAllText($"{Configs.DataDirectory}/Config.json", JsonSerializer.Serialize(cfg, AppSerializerContext.Default.Configs)); ;
@@ -26,14 +36,35 @@ if (!File.Exists(Configs.DataDirectory + "/SETUP"))
 
 
 
-var builder = WebApplication.CreateSlimBuilder(args);
+var builder = WebApplication.CreateBuilder(args);
 
+#region Services
+builder.Services.AddDistributedMemoryCache(); 
+builder.Services.AddSession(o =>
+{
+    o.IdleTimeout = TimeSpan.FromDays(7);
+    o.Cookie.HttpOnly = true;
+    o.Cookie.IsEssential = true;
+    o.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest; 
+});
+builder.Services.AddAuthorization(); 
+builder.Services.AddCors(option =>
+{
+    option.AddPolicy(name: "all", policy =>
+    {
+        policy.WithOrigins("localhost:5261").WithHeaders("Content-Type").AllowCredentials(); 
+    });
+});
 builder.Services.ConfigureHttpJsonOptions(options =>
 {
     options.SerializerOptions.TypeInfoResolverChain.Insert(0, AppSerializerContext.Default);
 });
+#endregion
 
 var app = builder.Build();
+app.UseCors(); 
+app.UseAuthorization();
+app.UseSession(); 
 
 
 
@@ -47,11 +78,8 @@ app.MapGet("/", () =>
 });
 
 app.UseUserApi((cfg, connection));
+app.UseOobeApis((cfg, connection));
 app.UseFileApis(cfg); 
-
-
-
-
 
 //todosApi.MapGet("/", () => sampleTodos);
 //todosApi.MapGet("/{id}", (int id) =>

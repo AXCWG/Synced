@@ -28,7 +28,16 @@ namespace Synced.Server
         }
         public bool? EnableRegister
         {
-            get; set;
+            get
+            {
+                return field; 
+            }
+            set
+            {
+                field = value;
+                File.WriteAllText($"{Configs.DataDirectory}/Config.json", JsonSerializer.Serialize(this, AppSerializerContext.Default.Configs)); ;
+
+            }
         }
 
         public static bool isInit
